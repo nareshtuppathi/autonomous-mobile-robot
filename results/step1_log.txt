@@ -1,0 +1,51 @@
+=== Scenario 1: default map ===
+Map size : 40 rows x 60 cols, 436 obstacle cells (18.2%)
+Start    : [row 20, col 5]
+Goal     : [row 20, col 55]
+
+--- A* result ---
+Path found      : 1
+Path length     : 73.2548 cell units (61 cells, 60 steps)
+Expanded nodes  : 807 of 1964 free cells
+Runtime         : 0.0139 s
+
+--- Path validation ---
+Starts at start cell        : 1
+Ends at goal cell           : 1
+All 61 cells inside the map : 1
+All cells obstacle-free     : 1
+Consecutive cells adjacent  : 1  (32 diagonal steps)
+No obstacle corner cutting  : 1
+No repeated cells           : 1
+
+--- Cross-checks ---
+Dijkstra (h = 0) length : 73.2548, expanded 1565 nodes
+A* (octile) length      : 73.2548, expanded 807 nodes
+
+=== Scenario 2: no-path map (goal sealed inside a box) ===
+Path found      : 0
+Message         : No path exists between start and goal.
+Expanded nodes  : 1915 (entire reachable region explored)
+Path cells      : 0, path length: NaN
+
+=== Input validation ===
+Start inside obstacle -> The start cell [10 15] is inside an obstacle.
+
+=== Check summary ===
+[PASS] A* finds a path on the default map
+[PASS] Path is inside the map
+[PASS] Path avoids all obstacles
+[PASS] Path cells are connected (adjacent)
+[PASS] Path starts at start and ends at goal
+[PASS] No diagonal cuts across obstacle corners
+[PASS] Path has no repeated cells
+[PASS] A* cost equals Dijkstra cost (optimal)
+[PASS] A* expands fewer nodes than Dijkstra
+[PASS] Repeated run gives an identical path
+[PASS] No-path case does not throw an error
+[PASS] No-path case reports found = false
+[PASS] No-path case returns an empty path
+[PASS] No-path case: validatePath rejects empty path
+[PASS] Obstacle start cell raises astarPlanner:occupiedEndpoint
+
+15 of 15 checks passed.

@@ -1,0 +1,96 @@
+=== Step 2: configuration ===
+Cell size        : 0.250 m/cell  (resolution = 4 cells/m)
+Map              : 40 x 60 cells = 15.00 m x 10.00 m
+Robot radius     : 0.200 m (diameter 0.400 m)
+Safety margin    : 0.050 m
+Inflation        : 0.250 m requested -> 1 cell(s) = 0.250 m applied
+binaryOccupancyMap: GridSize [40 60], Resolution 4, X [0 15] m, Y [0 10] m
+
+=== Obstacle inflation ===
+Obstacle cells   : 436 real -> 918 inflated (18.2% -> 38.2% of the map)
+Start [20 5] free in inflated map: 1, goal [20 55]: 1
+
+=== A* on the inflated map ===
+Path found      : 1
+Path length     : 19.7530 m (79.0122 cells)
+Waypoints       : 68
+Expanded nodes  : 681 of 1482 free inflated cells
+
+=== Path smoothing (clearance-preserving line-of-sight) ===
+Waypoints       : 68 -> 9
+Length          : 19.7530 m -> 19.0915 m
+Segment checks  : 260 candidate shortcuts tested
+
+=== Validation ===
+A* grid path (inflated map)
+  waypoints 68 | length 19.7530 m | min clearance 0.3750 m
+  start/goal match 1/1 | waypoints in map 1, in free cells 1
+  all segments in free inflated cells 1 (blocked: 0) | dense samples free 1
+  clearance >= robot radius 1 | >= radius + margin 1 | ALL PASS 1
+Smoothed path
+  waypoints 9 | length 19.0915 m | min clearance 0.3750 m
+  start/goal match 1/1 | waypoints in map 1, in free cells 1
+  all segments in free inflated cells 1 (blocked: 0) | dense samples free 1
+  clearance >= robot radius 1 | >= radius + margin 1 | ALL PASS 1
+Step 1 path (plain map, no inflation)
+  waypoints 61 | length 18.3137 m | min clearance 0.1250 m
+  start/goal match 1/1 | waypoints in map 1, in free cells 0
+  all segments in free inflated cells 0 (blocked: 13) | dense samples free 0
+  clearance >= robot radius 0 | >= radius + margin 0 | ALL PASS 0
+
+=== plannerAStarGrid comparison (same inflated map) ===
+Planner                                Length (m)     Expanded  Waypoints Corner cuts
+Ours (Step 1 rules, no corner cutting)    19.7530          681         68          0
+Ours with AllowCornerCutting = true       19.1673          675         64          6
+plannerAStarGrid (default settings)       19.1673          858         64          5
+plannerAStarGrid (TieBreaker on)          19.7530          807         68          4
+Toolbox path vs our corner-cutting path: cost difference 1.07e-14 m, identical cells: 0
+Toolbox path under our checks: cell-free segments 0 (blocked 5), min clearance 0.354 m
+
+=== Comparison table (saved to results/step2_comparison.csv) ===
+                      Path                       Waypoints    LengthM    MinClearanceM    MeetsRobotRadius    MeetsTotalClearance    SegmentsInflatedFree    AllChecksPass
+    _________________________________________    _________    _______    _____________    ________________    ___________________    ____________________    _____________
+
+    {'Step 1 path (plain map, no inflation)'}       61        18.314          0.125            false                 false                  false                false    
+    {'A* grid path (inflated map)'          }       68        19.753          0.375            true                  true                   true                 true     
+    {'Smoothed path (inflated map)'         }        9        19.092          0.375            true                  true                   true                 true     
+    {'plannerAStarGrid (toolbox)'           }       64        19.167        0.35355            true                  true                   false                false    
+
+
+=== Failure cases ===
+Start next to a wall -> amrStep2:endpointInInflatedRegion
+  Start cell [20 14] (x = 3.375 m, y = 5.125 m) is too close to an obstacle for the robot: it lies inside the inflated region (radius 0.200 m + margin 0.050 m, rounded up to 0.250 m). Move it, or reduce the radius or margin.
+Goal inside obstacle -> amrStep2:endpointInObstacle
+  Goal cell [10 15] (x = 3.625 m, y = 7.625 m) is inside an obstacle.
+Goal outside map -> amrStep2:endpointOutOfBounds
+  Goal cell [99 99] is outside the 40x60 map.
+Robot radius 0.45 m + 0.05 m margin (2-cell inflation): found = 0, message: No path exists between start and goal.
+Negative radius -> MATLAB:validators:mustBePositive
+
+=== Check summary ===
+[PASS] binaryOccupancyMap resolution = 1 / cellSize
+[PASS] binaryOccupancyMap contents equal the Step 1 grid
+[PASS] map extent equals grid size times cell size
+[PASS] gridCoordsToWorld matches grid2world
+[PASS] Inflated map contains every real obstacle
+[PASS] Inflation added obstacle cells
+[PASS] Original map is unchanged by inflation
+[PASS] A* finds a path in the inflated map
+[PASS] Grid path passes all clearance checks
+[PASS] Smoothed path passes all clearance checks
+[PASS] Smoothed waypoints are a subset of the grid path
+[PASS] Smoothed path starts at start and ends at goal
+[PASS] Smoothed path is not longer than the grid path
+[PASS] Smoothed path has fewer waypoints
+[PASS] Smoothed path keeps at least the required clearance
+[PASS] Step 1 path violates the robot footprint (shows why inflation is needed)
+[PASS] Toolbox cost equals our A* cost when corner cutting is allowed
+[PASS] Toolbox path is no longer than our no-corner-cutting path
+[PASS] Toolbox PathCost (m) matches its own path length x cell size
+[PASS] Start inside inflated region raises amrStep2:endpointInInflatedRegion
+[PASS] Goal inside obstacle raises amrStep2:endpointInObstacle
+[PASS] Goal outside map raises amrStep2:endpointOutOfBounds
+[PASS] Oversized robot: planner reports no path without error
+[PASS] Negative robot radius is rejected
+
+24 of 24 checks passed.

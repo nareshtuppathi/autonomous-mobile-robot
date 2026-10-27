@@ -1,0 +1,15 @@
+# MATLAB / Simulink generated files that must not be committed
+slprj/
+*.slxc
+*.asv
+*.autosave
+*.m~
+*.mexw64
+codegen/
+
+# Operating-system clutter
+Thumbs.db
+.DS_Store
+
+# NOT ignored on purpose: results/ (logs, CSVs, figures) and simulink/amr_step4_tracking.slx
+# are committed as the verified outputs of the project.

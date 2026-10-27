@@ -1,0 +1,9 @@
+Scenario,Expected,MatlabReason,SimulinkReason,MatlabSteps,SimulinkSteps,MaxAbsDiff,SimulinkFinalSpeedMps,SimulinkMaxLinearAccelMps2,Pass
+B: 120 deg initial heading error,goal_reached,goal_reached,goal_reached,1812,1812,0,0,0.5,1
+timeout (time limit 0.2 x reference),timeout,timeout,timeout,346,346,0,0.432474288442696,0.5,1
+missed_goal (brakes at 0.3 m/s^2),missed_goal,missed_goal,missed_goal,1751,1751,0,0,0.3,1
+stalled (no creep speed),stalled,stalled,stalled,251,251,0,0,0,1
+diverged (start 1.5 m off the path),diverged,diverged,diverged,1,1,0,0,0,1
+collision (start 0.10 m from a wall),collision,collision,collision,1,1,0,0,0,1
+left_map (start outside the map),left_map,left_map,left_map,1,1,0,0,0,1
+numerical_failure (NaN pose),numerical_failure,numerical_failure,numerical_failure,1,1,0,0,0,1

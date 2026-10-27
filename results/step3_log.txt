@@ -1,0 +1,97 @@
+=== Step 3 inputs (from Steps 1 and 2) ===
+Map: 40 x 60 cells at 0.25 m/cell; robot radius 0.20 m + margin 0.05 m = 0.25 m required clearance
+Step 2 smoothed path: 9 waypoints, 19.0915 m, min clearance 0.3750 m, validation pass = 1
+
+=== Tracking parameters ===
+Robot  : v <= 0.60 m/s, omega <= 1.50 rad/s, accel <= 0.50 m/s^2, yaw accel <= 3.00 rad/s^2, track 0.34 m, wheel <= 0.80 m/s
+Reference: lateral accel limit 0.40 m/s^2, min turn speed 0.15 m/s, sample spacing 0.05 m, corner blend 0.80 m
+Pure Pursuit: lookahead 0.30 + 0.80*v m (clipped to [0.30, 1.20]), rotate in place above 80 deg, min speed 0.05 m/s, goal tolerance 0.10 m
+Simulation: dt 0.020 s, timeout 2.0 x reference duration + 10 s, divergence at 0.50 m cross-track
+
+=== Reference trajectory ===
+Samples 403 | length 19.0915 m | duration 34.45 s | mean speed 0.554 m/s
+Max speed 0.600 m/s | max |curvature| 3.14 1/m | max |omega| 1.121 rad/s | max |accel| 0.500 m/s^2
+Max wheel speed 0.709 m/s | max lateral accel 0.400 m/s^2 (limit 0.40; the speed floor can exceed it)
+Reference min clearance to real obstacles: 0.3750 m
+
+=== Scenario A (nominal start) ===
+Termination reason          : goal_reached
+Goal reached                : 1
+Duration                    : 34.02 s (reference 34.45 s)
+Distance travelled          : 18.5110 m (reference path 19.0915 m)
+Final position error        : 0.0055 m
+Cross-track error  max / RMS: 0.1750 m / 0.0440 m  (signed distance to the reference polyline)
+Max heading error (wrapped) : 36.06 deg  (0.6293 rad); after first within 30 deg (t = 0.00 s): 36.06 deg
+Max applied accel          : 0.5000 m/s^2 linear, 3.0000 rad/s^2 angular; final speed 0 m/s
+Max linear / angular speed  : 0.600 m/s / 0.903 rad/s (max wheel 0.656 m/s)
+Min clearance (real map)    : 0.2752 m (collision below 0.20 m, required 0.25 m)
+Collision                   : 0
+Clearance violation         : 0 (0 samples below the required clearance)
+All logged values finite    : 1
+Overall pass                : 1
+Applied acceleration: max 0.500000 m/s^2 (limit 0.50), max yaw acceleration 3.000000 rad/s^2 (limit 3.00), tolerance 1e-09
+Final speed 0 m/s (the robot braked to a standstill)
+Cross-track budget that would GUARANTEE the required clearance (reference min clearance - required) = 0.125 m.
+  Max cross-track was 0.175 m; the exact clearance check above is what decides pass/fail.
+
+=== Scenario B (120 deg initial heading error) ===
+Termination reason          : goal_reached
+Goal reached                : 1
+Duration                    : 36.22 s (reference 34.45 s)
+Distance travelled          : 18.5704 m (reference path 19.0915 m)
+Final position error        : 0.0056 m
+Cross-track error  max / RMS: 0.1725 m / 0.0569 m  (signed distance to the reference polyline)
+Max heading error (wrapped) : 120.00 deg  (2.0944 rad); after first within 30 deg (t = 2.86 s): 36.09 deg
+Max applied accel          : 0.5000 m/s^2 linear, 3.0000 rad/s^2 angular; final speed 0 m/s
+Max linear / angular speed  : 0.600 m/s / 1.500 rad/s (max wheel 0.656 m/s)
+Min clearance (real map)    : 0.2779 m (collision below 0.20 m, required 0.25 m)
+Collision                   : 0
+Clearance violation         : 0 (0 samples below the required clearance)
+All logged values finite    : 1
+Overall pass                : 1
+
+=== Failure handling ===
+Timeout case   : reason = timeout, goal reached = 0
+Missed-goal case: reason = missed_goal, final error 0.231 m (tolerance 0.10 m), final speed 0 m/s, min clearance 0.272 m
+Stall case     : reason = stalled after 5.0 s
+Divergence case: reason = diverged
+Collision case : reason = collision
+
+=== Metrics table (saved to results/step3_metrics.csv) ===
+                 Scenario                    Termination       GoalReached    DurationS    DistanceM    FinalErrorM    MaxCrossTrackM    RmsCrossTrackM    MaxHeadingErrorDeg    MaxLinearSpeedMps    MaxAngularSpeedRadps    MinClearanceM    Collision    ClearanceViolation    MaxLinearAccelMps2    MaxAngularAccelRadps2    FinalSpeedMps
+    ___________________________________    ________________    ___________    _________    _________    ___________    ______________    ______________    __________________    _________________    ____________________    _____________    _________    __________________    __________________    _____________________    _____________
+
+    {'A nominal start'                }    {'goal_reached'}       true          34.02       18.511        0.005495        0.17497           0.044007             36.059                 0.6                 0.90261              0.2752          false            false                  0.5                      3                    0      
+    {'B 120 deg initial heading error'}    {'goal_reached'}       true          36.22        18.57       0.0055548        0.17254           0.056852                120                 0.6                     1.5              0.2779          false            false                  0.5                      3                    0      
+
+
+=== Check summary ===
+[PASS] Step 2 smoothed path passes its own validation
+[PASS] World path starts at the start cell centre and ends at the goal cell centre
+[PASS] Reference respects speed, acceleration, yaw-rate and wheel-speed limits, starts and ends at rest
+[PASS] Reference passes exactly through every smoothed waypoint
+[PASS] Reference length equals the polyline length
+[PASS] Reference keeps the required clearance from real obstacles
+[PASS] A: goal reached
+[PASS] A: final position error within the goal tolerance
+[PASS] A: no collision with the original occupied map
+[PASS] A: required clearance (radius + margin) kept at every step
+[PASS] A: no NaN or Inf in any logged signal
+[PASS] A: linear, angular and wheel speed limits respected
+[PASS] A: acceleration limits respected over all samples, including the final stop
+[PASS] A: robot ends at rest inside the goal tolerance (reason goal_reached)
+[PASS] A: finished before the timeout
+[PASS] A: repeated run is bit-for-bit identical (deterministic)
+[PASS] B: goal reached from a 120 deg initial heading error
+[PASS] B: no collision and required clearance kept
+[PASS] B: no NaN or Inf in any logged signal
+[PASS] B: acceleration limits respected over all samples
+[PASS] B: robot ends at rest inside the goal tolerance
+[PASS] B: initial heading error is recovered (first logged error is 120 deg)
+[PASS] Timeout is detected and is not reported as success
+[PASS] Stopping outside the goal tolerance is reported as missed_goal, not success
+[PASS] Stalled robot is detected
+[PASS] Large cross-track error is detected as divergence
+[PASS] Starting inside the robot radius of an obstacle is detected as a collision
+
+27 of 27 checks passed.

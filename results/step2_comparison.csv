@@ -1,0 +1,5 @@
+Path,Waypoints,LengthM,MinClearanceM,MeetsRobotRadius,MeetsTotalClearance,SegmentsInflatedFree,AllChecksPass
+"Step 1 path (plain map, no inflation)",61,18.3137084989848,0.125,0,0,0,0
+"A* grid path (inflated map)",68,19.7530483272049,0.375,1,1,1,1
+"Smoothed path (inflated map)",9,19.0915178402301,0.375,1,1,1,1
+"plannerAStarGrid (toolbox)",64,19.167261889578,0.353553390593274,1,1,0,0

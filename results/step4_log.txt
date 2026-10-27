@@ -1,0 +1,147 @@
+=== BUILD ===
+Model file : C:\Users\Naresh Tuppathi\Documents\autonomous-mobile-robot\simulink\amr_step4_tracking.slx
+Top-level blocks (11): ActuatorState, Actuator_Limits, Controller_PurePursuit, Environment_Clearance, Logging, Plant_UnicycleKinematics, PoseState, ProgressState, StopOnTermination, Supervisor_GoalStop, sl_log
+Solver     : FixedStepDiscrete, fixed step = s4dt, stop time = s4stopTime
+Diagram    : C:\Users\Naresh Tuppathi\Documents\autonomous-mobile-robot\results\figures\step4_00_model_diagram.png
+
+=== SIMULATION (Scenario A: nominal start) ===
+MATLAB   : goal_reached after 1702 steps (34.02 s)
+Simulink : goal_reached after 1702 steps (34.02 s)
+
+=== VALIDATION: tolerances (fixed in advance) ===
+Lengths/times 1e-09 m|s | angles 1e-09 rad | velocities 1e-09 | scalar metrics 1e-09 | ODE one-step 1e-09
+Integer quantities (step count, termination reason, braking onset step, rotating flag) must match exactly.
+
+=== VALIDATION: sample-by-sample differences, Scenario A (MATLAB vs Simulink) ===
+Signal             Max |diff|    Tolerance Pass
+t                   0.000e+00        1e-09 PASS
+x                   0.000e+00        1e-09 PASS
+y                   0.000e+00        1e-09 PASS
+theta               0.000e+00        1e-09 PASS
+v                   0.000e+00        1e-09 PASS
+omega               0.000e+00        1e-09 PASS
+vDes                0.000e+00        1e-09 PASS
+omegaDes            0.000e+00        1e-09 PASS
+sProj               0.000e+00        1e-09 PASS
+xRef                0.000e+00        1e-09 PASS
+yRef                0.000e+00        1e-09 PASS
+thetaRef            0.000e+00        1e-09 PASS
+vRef                0.000e+00        1e-09 PASS
+omegaRef            0.000e+00        1e-09 PASS
+tRef                0.000e+00        1e-09 PASS
+crossTrack          0.000e+00        1e-09 PASS
+headingError        0.000e+00        1e-09 PASS
+clearanceM          0.000e+00        1e-09 PASS
+lookahead           0.000e+00        1e-09 PASS
+xLook               0.000e+00        1e-09 PASS
+yLook               0.000e+00        1e-09 PASS
+alpha               0.000e+00        1e-09 PASS
+rotating            0.000e+00        0e+00 PASS
+distToGoal          0.000e+00        1e-09 PASS
+Steps: MATLAB 1702, Simulink 1702 | termination: goal_reached / goal_reached | braking starts at step 1669 / 1669
+Largest difference over all signals and samples: 0.000e+00
+
+=== VALIDATION: summary metrics, Scenario A ===
+Metric                                 MATLAB       Simulink      |diff|       Tol Pass
+durationS                               34.02          34.02    0.00e+00     1e-09 PASS
+distanceTravelledM                     18.511         18.511    0.00e+00     1e-09 PASS
+finalPositionErrorM                0.00549497     0.00549497    0.00e+00     1e-09 PASS
+maxCrossTrackM                       0.174965       0.174965    0.00e+00     1e-09 PASS
+rmsCrossTrackM                      0.0440069      0.0440069    0.00e+00     1e-09 PASS
+maxHeadingErrorRad                   0.629346       0.629346    0.00e+00     1e-09 PASS
+maxHeadingErrorAfterAlignRad         0.629346       0.629346    0.00e+00     1e-09 PASS
+maxLinearSpeedMps                         0.6            0.6    0.00e+00     1e-09 PASS
+maxAngularSpeedRadps                 0.902613       0.902613    0.00e+00     1e-09 PASS
+maxWheelSpeedMps                     0.656384       0.656384    0.00e+00     1e-09 PASS
+maxLinearAccelMps2                        0.5            0.5    0.00e+00     1e-09 PASS
+maxAngularAccelRadps2                       3              3    0.00e+00     1e-09 PASS
+finalSpeedMps                               0              0    0.00e+00     1e-09 PASS
+minClearanceM                        0.275197       0.275197    0.00e+00     1e-09 PASS
+numViolatingSamples                         0              0    0.00e+00     0e+00 PASS
+goalReached                                 1              1    0.00e+00     0e+00 PASS
+collision                                   0              0    0.00e+00     0e+00 PASS
+clearanceViolation                          0              0    0.00e+00     0e+00 PASS
+overallPass                                 1              1    0.00e+00     0e+00 PASS
+allFinite                                   1              1    0.00e+00     0e+00 PASS
+Termination reason: MATLAB goal_reached, Simulink goal_reached
+
+Plant check against ode45 (one step at a time, 1701 steps): max position error 2.13e-12 m, max heading error 1.11e-15 rad
+
+Sensitivity: lookahead minimum 0.30 -> 0.50 m. MATLAB vs Simulink with the same change: max diff 0.00e+00 (equivalent: 1).
+Baseline MATLAB vs changed Simulink: max diff 3.085e+00 (the comparison must flag this).
+
+=== VALIDATION: other scenarios (MATLAB vs Simulink) ===
+Scenario                               MATLAB             Simulink           StepsM StepsS  Max |diff| Pass
+B: 120 deg initial heading error       goal_reached       goal_reached         1812   1812    0.00e+00 PASS
+timeout (time limit 0.2 x reference)   timeout            timeout               346    346    0.00e+00 PASS
+missed_goal (brakes at 0.3 m/s^2)      missed_goal        missed_goal          1751   1751    0.00e+00 PASS
+stalled (no creep speed)               stalled            stalled               251    251    0.00e+00 PASS
+diverged (start 1.5 m off the path)    diverged           diverged                1      1    0.00e+00 PASS
+collision (start 0.10 m from a wall)   collision          collision               1      1    0.00e+00 PASS
+left_map (start outside the map)       left_map           left_map                1      1    0.00e+00 PASS
+numerical_failure (NaN pose)           numerical_failure  numerical_failure       1      1    0.00e+00 PASS
+
+=== Heading-error jump investigation ===
+Event threshold: |step of heading error| > 0.1015 rad per 0.02 s step (largest change smooth motion can produce)
+
+Scenario A (Simulink log): 3 events, projection jumps 3, wrapping 0, robot motion 0, controller mode switches 0, unexplained 0
+  step  261 (t =   5.20 s): d(error) = -0.117 rad, d(ref heading) = -0.126, d(robot heading) = -0.009, d(progress) = 0.118 m (robot moves <= 0.012 m/step), predicted flip 0.105 m, corner 2 -> projection_jump
+  step  361 (t =   7.20 s): d(error) = +0.686 rad, d(ref heading) = +0.704, d(robot heading) = +0.018, d(progress) = 0.358 m (robot moves <= 0.012 m/step), predicted flip 0.343 m, corner 3 -> projection_jump
+  step 1011 (t =  20.20 s): d(error) = -0.962 rad, d(ref heading) = -0.973, d(robot heading) = -0.011, d(progress) = 0.310 m (robot moves <= 0.012 m/step), predicted flip 0.303 m, corner 6 -> projection_jump
+  max |heading error| 36.1 deg; largest step 0.962 rad; with rate-limited progress 0.028 rad
+  reference heading: largest change per sample 0.157 rad (max curvature 3.14 1/m): continuous, no jumps
+  robot heading: largest change per step 0.0181 rad | desired omega step up to 1.052 rad/s, applied omega step 0.0600 rad/s per step
+
+Scenario B (Simulink log): 3 events, projection jumps 3, wrapping 0, robot motion 0, controller mode switches 0, unexplained 0
+  step  371 (t =   7.40 s): d(error) = -0.122 rad, d(ref heading) = -0.130, d(robot heading) = -0.008, d(progress) = 0.122 m (robot moves <= 0.012 m/step), predicted flip 0.111 m, corner 2 -> projection_jump
+  step  471 (t =   9.40 s): d(error) = +0.679 rad, d(ref heading) = +0.697, d(robot heading) = +0.018, d(progress) = 0.355 m (robot moves <= 0.012 m/step), predicted flip 0.345 m, corner 3 -> projection_jump
+  step 1120 (t =  22.38 s): d(error) = -0.962 rad, d(ref heading) = -0.973, d(robot heading) = -0.011, d(progress) = 0.310 m (robot moves <= 0.012 m/step), predicted flip 0.302 m, corner 6 -> projection_jump
+  max |heading error| 120.0 deg; largest step 0.962 rad; with rate-limited progress 0.030 rad
+  reference heading: largest change per sample 0.157 rad (max curvature 3.14 1/m): continuous, no jumps
+  robot heading: largest change per step 0.0300 rad | desired omega step up to 1.436 rad/s, applied omega step 0.0600 rad/s per step
+
+Conclusion: every abrupt step of the heading error is a jump of the projected progress sProj (the nearest point on the path flips between two segments when the robot cuts inside a corner).
+The geometric prediction 2*d*tan(phi/2) matches the measured progress jumps. Angle wrapping is never active, the reference heading is continuous, and the robot heading stays smooth.
+The jump also reaches the controller (the lookahead point moves, so the desired omega steps), but the actuator rate limit smooths it before it reaches the robot.
+
+Figures: step4_00_model_diagram.png, step4_01_trajectory_comparison.png, step4_02_tracking_signals.png, step4_03_max_differences.png, step4_04_heading_error_investigation.png, step4_05_heading_error_investigation_B.png
+
+=== Check summary ===
+[PASS] [BUILD] Model file exists
+[PASS] [BUILD] Model contains the planned state, subsystem, logging and stop blocks
+[PASS] [BUILD] Fixed-step discrete solver using the Step 3 time step
+[PASS] [SIMULATION] Model compiles and runs to a termination without error
+[PASS] [SIMULATION] No warnings were raised during the run
+[PASS] [SIMULATION] Simulink time vector advances in steps of the control period
+[PASS] [SIMULATION] Scenario A reaches the goal in Simulink
+[PASS] [VALIDATION] Same number of steps
+[PASS] [VALIDATION] Same termination reason (goal_reached)
+[PASS] [VALIDATION] Braking starts at the same step in both, and it matches the Simulink braking flag
+[PASS] [VALIDATION] Every logged signal agrees within tolerance (pose, reference, commands, errors, clearance)
+[PASS] [VALIDATION] Every summary metric agrees within tolerance
+[PASS] [VALIDATION] Simulink acceleration limits respected over all samples including the final braking
+[PASS] [VALIDATION] Simulink run ends at rest inside the goal tolerance
+[PASS] [VALIDATION] Simulink trajectory is collision-free and keeps the required clearance from the real map
+[PASS] [VALIDATION] No NaN or Inf in the Simulink log (clearance Inf allowed only without obstacles)
+[PASS] [VALIDATION] Two Simulink runs give identical logs (deterministic)
+[PASS] [VALIDATION] Logged Simulink poses satisfy the unicycle ODE (ode45 cross-check)
+[PASS] [VALIDATION] Equivalence also holds with a changed controller parameter
+[PASS] [VALIDATION] The comparison detects a real difference (it is not vacuous)
+[PASS] [VALIDATION] Scenario 'B: 120 deg initial heading error': Simulink ends with goal_reached and matches MATLAB
+[PASS] [VALIDATION] Scenario 'timeout (time limit 0.2 x reference)': Simulink ends with timeout and matches MATLAB
+[PASS] [VALIDATION] Scenario 'missed_goal (brakes at 0.3 m/s^2)': Simulink ends with missed_goal and matches MATLAB
+[PASS] [VALIDATION] Scenario 'stalled (no creep speed)': Simulink ends with stalled and matches MATLAB
+[PASS] [VALIDATION] Scenario 'diverged (start 1.5 m off the path)': Simulink ends with diverged and matches MATLAB
+[PASS] [VALIDATION] Scenario 'collision (start 0.10 m from a wall)': Simulink ends with collision and matches MATLAB
+[PASS] [VALIDATION] Scenario 'left_map (start outside the map)': Simulink ends with left_map and matches MATLAB
+[PASS] [VALIDATION] Scenario 'numerical_failure (NaN pose)': Simulink ends with numerical_failure and matches MATLAB
+[PASS] [VALIDATION] Goal-stop: missed_goal stops at rest outside the tolerance and is not reported as success
+[PASS] [VALIDATION] Scenario B: Simulink ends at rest inside the tolerance, clearance kept, accelerations within limits
+[PASS] [VALIDATION] Scenario B poses satisfy the unicycle ODE (ode45 cross-check)
+[PASS] [VALIDATION] Heading-error events are identical in the MATLAB and Simulink logs
+[PASS] [VALIDATION] Every heading-error event in Scenario A is explained (all are projection jumps)
+[PASS] [VALIDATION] Angle wrapping is not the cause (never active, error stays below pi)
+[PASS] [VALIDATION] Without the progress jump the heading error is smooth (below the event threshold)
+[PASS] [VALIDATION] Geometric flip prediction is within 20% of each measured progress jump
+
+36 of 36 checks passed.
